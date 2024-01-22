@@ -1,0 +1,43 @@
+{% load static %}
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+  <!--NAV start-->
+  <ul class="nav nav-pills nav justify-content-center py-2">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="{% url 'contas:login' %}">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'contas:registrar' %}">Cadastro</a>
+    </li>
+  </ul>
+  <!--NAV end-->
+
+  <!--Content start-->
+  <div class="container-fluid py-5">
+    <div class="row p-5 border rounded justify-content-center bg-light">
+      <h1 class="display-6 fw-bold text-primary text-center">Login</h1>
+      <br>
+      <form class="row g-3 justify-content-center" action="{% url 'contas:login' %}" method="post">
+        <div class="col-auto">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% bootstrap_button button_type="submit" content="OK" %}
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Content end-->
+</body>
+</html>

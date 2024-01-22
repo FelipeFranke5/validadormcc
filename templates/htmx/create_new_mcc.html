@@ -1,0 +1,15 @@
+{% load django_bootstrap5 %}
+
+<div id="mcc_create_form">
+  {% if created %}
+    <div class="col-auto text-center border rounded p-5 mb-3">
+      <p class="text-secondary">MCC cadastrado!</p>
+      <a class="btn btn-primary btn-sm" href="{% url 'validador_mcc:edit_mccs' %}">Recarregar Página</a>
+    </div>
+  {% endif %}
+  <form action="#" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input class="btn btn-primary" type="submit" value="Cadastrar" hx-post="{% url 'validador_mcc:create_new_mcc' %}" hx-target="#mcc_create_form">
+  </form>
+</div>

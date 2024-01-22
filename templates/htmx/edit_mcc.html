@@ -1,0 +1,12 @@
+{% load django_bootstrap5 %}
+
+<div id="mcc_options{{ mcc.id }}" class="accordion-body">
+  <div class="col-auto">
+    <form action="#" method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input class="btn btn-primary btn-sm" type="submit" value="Confirmar Edição" hx-post="{% url 'validador_mcc:edit_mcc' pk=mcc.id %}" hx-target="#mcc_options{{ mcc.id }}" hx-swap="outerHTML">
+      <a class="btn btn-danger btn-sm" href="{% url 'validador_mcc:edit_mccs' %}">Cancelar</a>
+    </form>
+  </div>
+</div>

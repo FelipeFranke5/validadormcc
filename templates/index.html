@@ -1,0 +1,65 @@
+{% load static %}
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador MCC</title>
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <!--NAV start-->
+  {% if not user.is_authenticated %}
+    <ul class="nav nav-pills nav justify-content-center py-2">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contas:login' %}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contas:registrar' %}">Cadastro</a>
+      </li>
+    </ul>
+  {% else %}
+    <ul class="nav nav-pills nav justify-content-center py-2">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <form action="{% url 'contas:logout' %}" method="post">
+          {% csrf_token %}
+          <button class="nav-link" type="submit">Sair</button>
+        </form>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'validador_mcc:edit_mccs' %}">Editar MCCs</a>
+      </li>
+    </ul>
+  {% endif %}
+  <!--NAV end-->
+
+  <!--Content start-->
+  <div class="container-fluid py-5">
+    <div class="row p-5 border rounded justify-content-center bg-light">
+      <h1 class="display-6 fw-bold text-primary text-center">Validador MCC</h1>
+      <p class="text-center text-secondary"><strong>Importante:</strong> Não vai validar se o MCC digitado corresponde à um MCC real, apenas compara com uma sequência de números que caracteriza um MCC restrito.</p>
+      <br>
+      <form class="row g-3 justify-content-center" action="#">
+        <div class="col-auto">
+          <label class="form-label text-primary fw-bold" for="mcc">Digite o MCC:</label>
+          <input class="form-control" type="number" min="0" max="9999" name="mcc" id="mcc" placeholder="Ex: 8999" hx-post="{% url 'validador_mcc:validate_restricted_mcc' %}" hx-trigger="keyup" hx-target="#typed_mcc_result" hx-swap="outerHTML">
+        </div>
+        <div class="col-auto text-center" id="typed_mcc_result">
+          <p class="fw-bold text-info">Resultado:</p>
+          <p class="text-info fw-light">Comece a digitar..</p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Content end-->
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</body>
+</html>

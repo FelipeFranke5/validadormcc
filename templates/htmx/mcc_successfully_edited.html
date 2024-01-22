@@ -1,0 +1,9 @@
+{% load django_bootstrap5 %}
+
+<div id="mcc_options{{ mcc.id }}" class="accordion-body">
+  <div class="col-auto text-center">
+    <p class="text-success fw-bold mb-2">O MCC foi alterado com sucesso.</p>
+    <button class="btn btn-secondary btn-sm" type="submit" hx-get="{% url 'validador_mcc:edit_mcc' pk=mcc.id %}" hx-target="#mcc_options{{ mcc.id }}" hx-swap="outerHTML">Editar MCC</button>
+    <button class="btn btn-danger btn-sm" type="submit" hx-post="{% url 'validador_mcc:delete_mcc' pk=mcc.id %}" hx-target="#mcc_options{{ mcc.id }}" hx-swap="outerHTML" hx-confirm="Têm certeza que deseja exluir o MCC {{ mcc.code }}?">Excluir MCC</button>
+  </div>
+</div>

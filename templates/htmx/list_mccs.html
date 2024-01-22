@@ -1,0 +1,29 @@
+{% load django_bootstrap5 %}
+
+<div id="mcc_list">
+  {% if mccs %}
+    <div class="accordion accordion-flush" id="accordion0">
+      {% for mcc in mccs %}
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ mcc.id }}" aria-expanded="true" aria-controls="collapse{{ mcc.id }}">
+              <strong>{{ mcc.code }}</strong> - {{ mcc.name }}
+            </button>
+          </h2>
+          <div id="collapse{{ mcc.id }}" class="accordion-collapse collapse hide" data-bs-parent="#accordion0">
+            <div id="mcc_options{{ mcc.id }}" class="accordion-body">
+              <div class="col-auto text-center">
+                <button class="btn btn-secondary btn-sm" type="submit" hx-get="{% url 'validador_mcc:edit_mcc' pk=mcc.id %}" hx-target="#mcc_options{{ mcc.id }}" hx-swap="outerHTML">Editar MCC</button>
+                <button class="btn btn-danger btn-sm" type="submit" hx-post="{% url 'validador_mcc:delete_mcc' pk=mcc.id %}" hx-target="#mcc_options{{ mcc.id }}" hx-swap="outerHTML" hx-confirm="Têm certeza que deseja exluir o MCC {{ mcc.code }}?">Excluir MCC</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="col-auto border rounded p-5">
+      <h5 class="fw-bold text-center text-danger">Não há MCCs para exibir!</h5>
+    </div>
+  {% endif %}
+</div>

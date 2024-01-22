@@ -1,0 +1,57 @@
+{% load static %}
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar MCCs</title>
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <!--NAV start-->
+  <ul class="nav nav-pills nav justify-content-center py-2">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <form action="{% url 'contas:logout' %}" method="post">
+        {% csrf_token %}
+        <button class="nav-link" type="submit">Sair</button>
+      </form>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#">Editar MCCs</a>
+    </li>
+  </ul>
+  <!--NAV end-->
+
+  <!--Content start-->
+  <div class="container-fluid py-5">
+    <div class="row p-5 border rounded justify-content-center bg-light">
+      <h1 class="display-6 fw-bold text-primary text-center">Edite os MCCs restritos</h1>
+      <p class="text-center text-secondary">Inserir, editar ou excluir os MCCs restritos de credenciamento.</p>
+      <br>
+      <!--Form section start-->
+      <form class="row g-3 justify-content-center" action="#">
+        <div class="col-auto">
+          <!--HTMX New MCC creation form start-->
+          <h3 class="text-primary text-center" hx-get="{% url 'validador_mcc:create_new_mcc' %}" hx-trigger="load" hx-target="#mcc_create_form" hx-swap="outerHTML">Inserir novo MCC:</h3>
+          <div id="mcc_create_form"></div>
+          <!--HTMX New MCC creation form end-->
+        </div>
+      </form>
+      <!--Form section end-->
+      <!--List os MCCs start-->
+      <div class="col-auto py-5">
+        <h5 class="text-primary text-center" hx-get="{% url 'validador_mcc:list_mccs' %}" hx-trigger="load" hx-target="#mcc_list" hx-swap="outerHTML">Lista de MCCs cadastrados:</h5>
+        <div id="mcc_list"></div>
+      </div>
+      <!--List os MCCs end-->
+    </div>
+  </div>
+  <!--Content end-->
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</body>
+</html>
