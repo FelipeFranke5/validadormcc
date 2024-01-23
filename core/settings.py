@@ -30,7 +30,7 @@ RECAPTCHA_PUBLIC_KEY = env_file["RECAPTCHA_PUBLIC_KEY"]
 RECAPTCHA_PRIVATE_KEY = env_file["RECAPTCHA_PRIVATE_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [env_file["IP"], "validadormcc.com.br", "www.validadormcc.com.br"]
 
